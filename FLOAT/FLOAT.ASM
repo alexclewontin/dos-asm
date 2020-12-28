@@ -31,12 +31,13 @@
 ;       }
 ;
 ;
-; Owner:
+; Owner: Alex Lewontin
 ;
 ; Updated     Reason
 ; ----------------------------
 ; 10/06/2016  Original version
 ; 11/21/2016  Changed dd directive to real4
+; 04/24/2020  Added student code to assignment
 ;
 ;---------------------------------------------------------------------
 
@@ -108,21 +109,41 @@ start:                                 ;
 piloop:                                ;
 
 
-         ;***********************************
-         ; You code this statement
-         ; s = s - t * (a - b) * (a - b);
-         ;***********************************
+        ;***********************************
+        ; You code this statement
+        ; s = s - t * (a - b) * (a - b);
+        ;***********************************
 
+    fld [s]                 ; push s onto the stack. We need this ahead of everything else later
+    fld [a]                 ; push a onto the stack
+    fld [b]                 ; push b onto the stack
+    fsub                    ; pop a & b off, calculate a - b, push the result to the stack
+    fld [a]                 ; repeat of the previous 3 instructions
+    fld [b]                 ; repeat of the previous 3 instructions
+    fsub                    ; repeat of the previous 3 instructions
+    fmul                    ; now that the top 2 items are (a - b) this calculates (a - b) * (a - b)
+    fld [t]                 ; push t to the stack
+    fmul                    ; multiply t by the calculated (a - b) * (a - b) value
+    fsub                    ; This calculates s - t * (a - b) * (a - b), because we pushed s to the stack initially
+    fstp [s]                ; store the new value of s in s, popping it off leaving a on top
 
 ;---------------------------------------
 ;    pi = 4 * a * a / s;     // calc new value of pi
 ;---------------------------------------
 
 
-         ;***********************************
-         ; You code this statement
-         ; pi = 4 * a * a / s;
-         ;***********************************
+        ;***********************************
+        ; You code this statement
+        ; pi = 4 * a * a / s;
+        ;***********************************
+    fld [a]                 ; load a to the stack
+    fld [a]                 ; load a to the stack again
+    fmul                    ; now ST is a * a
+    fld [four]              ; load 4 to the stack
+    fmul                     ; calculate a * a * 4
+    fld [s]                 ; load s onto the stack
+    fdiv                    ; then divide the calculated amounts by it
+    fstp [pi]               ; store the calculated value in pi
 
 
 ;---------------------------------------
@@ -141,6 +162,12 @@ piloop:                                ;
          ; cc = (a + b) / 2.0;
          ;
          ;***********************************
+    fld [a]         ; push a to the stack
+    fld [b]         ; push b to the stack
+    fadd            ; calculate a + b
+    fld [two]       ; load 2 to the stack
+    fdiv            ; and divide by it
+    fstp [cc]       ; store the result in cc
 
 
 ;---------------------------------------
