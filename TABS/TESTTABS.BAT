@@ -2,6 +2,7 @@
 echo.
 
 rem // verify files exist and are valid
+if not exist gradcpy.bat   goto error1
 if not exist tabs.exe      goto error2
 
 if not exist %1 goto errin
@@ -48,6 +49,12 @@ goto   exit
 :errin
 echo.
 echo The input file specified: %1 does not exist.
+echo.
+goto   exit
+
+:error1
+echo.
+echo The batch file 'gradcpy.bat' does not exist in this directory.
 echo.
 goto   exit
 
