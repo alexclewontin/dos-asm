@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "defines": "cpp",
+        "*.arm": "arm",
+        "*.asm": "asm",
+        "*.c": "c",
+        "*.h": "c",
+        "FLOATPI.C": "cpp"
+    }
+}
